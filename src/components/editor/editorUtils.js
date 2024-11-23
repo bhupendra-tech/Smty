@@ -1,0 +1,167 @@
+import { Editor, Transforms, Element } from "slate";
+export const USER_EDITOR_DOC_TEMPLATE = [
+  {
+    type: "paragraph",
+    children: [{ text: "" }],
+  },
+];
+
+export const DEFAULT_TOOLBAR_CONFIG = [
+  {
+    textColor: "text-800",
+  },
+  {
+    textBackground: "bg-100",
+  },
+  {
+    paragraphFontSize: "text-sm",
+  },
+];
+
+export const ALIGNMENT_TYPES = {
+  LEFT: "left",
+  CENTER: "center",
+  RIGHT: "right",
+  JUSTIFY: "justify",
+};
+function getNodeWithCaret(editor) {
+  const { selection } = editor;
+
+  if (!selection) {
+    return null; // No selection, no node with caret
+  }
+
+  const [anchorNode] = Editor.node(editor, selection.anchor.path);
+
+  if (Element.isElement(anchorNode)) {
+    return anchorNode; // Caret is within an element
+  } else {
+    return Editor.parent(editor, selection.anchor.path); // Caret is within a text node
+  }
+}
+export const CustomEditor = {
+  isMarkActive({ editor, format }) {
+    const marks = Editor.marks(editor);
+    return marks ? marks[format] === true : false;
+  },
+  isBlockActive({ editor, format }) {
+    const [match] = Editor.nodes(editor, {
+      match: (n) => n.type === format,
+    });
+    return !!match;
+  },
+  toggleMark({ editor, format }) {
+    const isActive = CustomEditor.isMarkActive({ editor, format });
+    if (isActive) {
+      Editor.removeMark(editor, format);
+    } else {
+      Editor.addMark(editor, format, true);
+    }
+  },
+  toggleBlock({ editor, format, alignType }) {
+    const currentNodeAlignType = getNodeWithCaret(editor)?.[0]?.alignType;
+    const isActive = CustomEditor.isBlockActive({ editor, format });
+    Transforms.setNodes(
+      editor,
+      {
+        type:
+          isActive &&
+          (!currentNodeAlignType === alignType || currentNodeAlignType === "")
+            ? null
+            : format,
+        alignType,
+      },
+      { match: (n) => Editor.isBlock(editor, n) && Element.isElement(n) }
+    );
+  },
+
+  toggleList({ editor, format }) {
+    const isActive = CustomEditor.isListActive({ editor, format });
+    if (isActive) {
+      Transforms.unwrapNodes(editor, {
+        match: (n) =>
+          !Editor.isEditor(n) && Element.isElement(n) && n.type === format,
+        split: true,
+      });
+      Transforms.setNodes(
+        editor,
+        {
+          type: null,
+        },
+        {
+          match: (n) =>
+            Editor.isBlock(editor, n) &&
+            Element.isElement(n) &&
+            !Editor.isEditor(n),
+        }
+      );
+    } else {
+      Transforms.setNodes(
+        editor,
+        {
+          type: "listItem",
+        },
+        {
+          match: (n) =>
+            Editor.isBlock(editor, n) &&
+            Element.isElement(n) &&
+            !Editor.isEditor(n),
+        }
+      );
+      Transforms.wrapNodes(editor, { type: format, children: [] });
+    }
+  },
+
+  isListActive: ({ editor, format }) => {
+    const [match] = Editor.nodes(editor, {
+      match: (n) =>
+        !Editor.isEditor(n) && Element.isElement(n) && n.type === format,
+    });
+    return !!match;
+  },
+};
+
+export const fontSizeList = [
+  {
+    icon: "T",
+    name: "Text",
+  },
+  {
+    icon: "CC",
+    name: "Caption",
+    format: "caption",
+  },
+  {
+    icon: "H1",
+    name: "Heading 1",
+    format: "h1",
+  },
+  {
+    icon: "H2",
+    name: "Heading 2",
+    format: "h2",
+  },
+  {
+    icon: "H3",
+    name: "Heading 3",
+    format: "h3",
+  },
+  {
+    icon: "H4",
+    name: "Heading 4",
+    format: "h4",
+  },
+  {
+    icon: "H5",
+    name: "Heading 5",
+    format: "h5",
+  },
+  {
+    icon: "H6",
+    name: "Heading 6",
+    format: "h6",
+  },
+];
+
+// slate automatically determines which node or nodes to change this works in following work
+// first it gets the match nodes than it applies change to only match nodes that are selected
