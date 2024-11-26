@@ -6,9 +6,16 @@ import { Theme } from "@radix-ui/themes";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./pages/errorPage.jsx";
 import "./index.css";
-import SignIn, { submitSignInFormAction } from "./pages/signin.jsx";
-import SignUp, { submitSignUpFormAction } from "./pages/signup.jsx";
+import SignIn from "./pages/signin.jsx";
+import {
+  submitSignUpFormAction,
+  submitSignInFormAction,
+  submitSelectedSizeForm,
+} from "./utils/actions.js";
+import SignUp from "./pages/signup.jsx";
 import { Dashboard } from "./pages/dashboard.jsx";
+import Subject from "./components/subject.jsx";
+import EditorAndChatComponent from "./components/editorAndChat.jsx";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +38,13 @@ const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <Dashboard />,
+        children: [
+          { index: true, element: <Subject />, action: submitSelectedSizeForm },
+          {
+            path: "editor",
+            element: <EditorAndChatComponent />,
+          },
+        ],
       },
     ],
   },
@@ -38,7 +52,7 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <Theme appearance="dark" accentColor="sky" radius="medium">
+    <Theme accentColor="sky" radius="medium" appearance="dark">
       <RouterProvider router={router}>
         <App />
       </RouterProvider>

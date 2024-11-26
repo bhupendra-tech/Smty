@@ -3,7 +3,7 @@ export default function Logo({ className }) {
   const navigate = useNavigate();
   return (
     <img
-      src="src/assets/logo.png"
+      src="src/assets/logo.svg"
       className={className}
       onClick={() => navigate("/")}
     />

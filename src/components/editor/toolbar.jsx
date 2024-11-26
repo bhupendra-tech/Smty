@@ -11,7 +11,6 @@ import {
   TextAlignRightIcon,
   TextAlignJustifyIcon,
   ListBulletIcon,
-  CaretDownIcon,
   StrikethroughIcon,
 } from "@radix-ui/react-icons";
 import { OrderedListIcon } from "../../assets/orderedListIcon";

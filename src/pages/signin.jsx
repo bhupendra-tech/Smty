@@ -1,20 +1,27 @@
-import { Flex, Card, Heading, TextField, Box, Button } from "@radix-ui/themes";
-import { Form, useNavigation, useNavigate } from "react-router-dom";
+import {
+  Flex,
+  Card,
+  Heading,
+  TextField,
+  Box,
+  Button,
+  Text,
+} from "@radix-ui/themes";
+import { useEffect } from "react";
+import { useNavigation, useNavigate, useFetcher } from "react-router-dom";
 
-export const submitSignInFormAction = async ({ request }) => {
-  const formData = await request.formData();
-  const email = formData.get("email");
-  const password = formData.get("password");
-  console.log(email, password);
-  return redirect("/dashboard");
-};
 export default function SignIn() {
   const navigate = useNavigate();
-  const navigation = useNavigation();
+  const fetcher = useFetcher();
+  useEffect(() => {
+    if (fetcher.data?.error === false) {
+      navigate("/dashboard");
+    }
+  }, [fetcher?.data?.error]);
   return (
     <Flex width={"100vw"} height={"100vh"} align={"center"} justify={"center"}>
       <Card>
-        <Form className="px-5 py-5" method="post">
+        <fetcher.Form className="px-5 py-5" method="post">
           <Heading as="h1">Sign in</Heading>
           <Box mt={"5"}>
             <Heading as="h6" size="2" weight={"medium"}>
@@ -27,9 +34,7 @@ export default function SignIn() {
               name="email"
               type="email"
               required
-            >
-              <TextField.Slot></TextField.Slot>
-            </TextField.Root>
+            ></TextField.Root>
           </Box>
           <Box mt={"5"}>
             <Heading as="span" size="2" weight={"medium"}>
@@ -42,10 +47,19 @@ export default function SignIn() {
               type="password"
               name="password"
               required
-            >
-              <TextField.Slot></TextField.Slot>
-            </TextField.Root>
+            ></TextField.Root>
           </Box>
+          {fetcher.data?.error && (
+            <Text
+              color="red"
+              align={"center"}
+              className="w-full block"
+              mt={"4"}
+              size={"2"}
+            >
+              {fetcher?.data?.errorMsg || "Something went wrong"}
+            </Text>
+          )}
           <Flex mt={"6"} justify={"end"}>
             <Button
               variant="soft"
@@ -53,18 +67,23 @@ export default function SignIn() {
               onClick={() => {
                 navigate("/signup");
               }}
+              disabled={
+                fetcher.state === "loading" || fetcher.state === "submitting"
+              }
             >
               Create an account
             </Button>
             <Button
               type="submit"
               ml={"3"}
-              loading={navigation.state !== "idle"}
+              loading={
+                fetcher.state === "loading" || fetcher.state === "submitting"
+              }
             >
               Sign in
             </Button>
           </Flex>
-        </Form>
+        </fetcher.Form>
       </Card>
     </Flex>
   );

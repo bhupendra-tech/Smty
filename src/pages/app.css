@@ -1,0 +1,44 @@
+.gradientBlock {
+  width: 240px;
+  height: 240px;
+  border-radius: 25rem;
+  opacity: 30%;
+  background: radial-gradient(
+      73.4% 100.98% at 95.54% 95.05%,
+      rgba(255, 156, 65, 0.78) 0%,
+      rgba(255, 168, 88, 0) 100%
+    ),
+    linear-gradient(197.37deg, #fff0a4 -0.38%, rgba(255, 240, 164, 0) 101.89%),
+    radial-gradient(
+      58.85% 73.83% at 9.82% 3.13%,
+      rgba(49, 132, 255, 0.8) 0%,
+      rgba(56, 75, 247, 0.208) 52.16%,
+      rgba(62, 246, 246, 0) 100%
+    ),
+    linear-gradient(
+      117.39deg,
+      #3e9ef6 3.91%,
+      rgba(238, 43, 183, 0.33) 37.48%,
+      rgba(246, 62, 106, 0) 73.98%
+    ),
+    linear-gradient(306.53deg, #ffaadd 19.83%, rgba(255, 170, 221, 0) 97.33%);
+  background-blend-mode: normal, normal, normal, normal, normal, normal;
+  filter: blur(31px);
+}
+.gradientBlock2 {
+  width: 240px;
+  height: 240px;
+  border-radius: 25rem;
+  opacity: 30%;
+  background: linear-gradient(180deg, #ef516d 0%, rgba(239, 81, 109, 0) 100%),
+    radial-gradient(
+      94.51% 124.88% at 94.32% 94.43%,
+      rgba(65, 244, 255, 0.78) 0%,
+      rgba(131, 218, 255, 0.6552) 32.29%,
+      rgba(99, 175, 240, 0.3978) 64.06%,
+      rgba(43, 90, 211, 0) 100%
+    ),
+    linear-gradient(313.04deg, #341d65 0.93%, #604aea 125.68%);
+  background-blend-mode: normal, normal, normal, normal, normal, normal;
+  filter: blur(31px);
+}

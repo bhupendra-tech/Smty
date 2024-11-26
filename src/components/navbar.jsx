@@ -1,31 +1,37 @@
-import { Button, Flex } from "@radix-ui/themes";
+import { Button, Flex, Box, Card, Heading } from "@radix-ui/themes";
 import Logo from "./logo";
 import { useNavigate } from "react-router-dom";
+import { ArrowRightIcon } from "@radix-ui/react-icons";
 
 export default function NavBar() {
   const navigate = useNavigate();
   return (
-    <Flex justify={"between"} align={"center"} p={"4"}>
-      <Logo className={"h-8"} />
-      <Flex gap={"3"}>
-        <Button
-          type="button"
-          variant="surface"
-          onClick={() => {
-            navigate("./signin");
-          }}
-        >
-          Sign In
-        </Button>
-        <Button
-          type="button"
-          onClick={() => {
-            navigate("./signup");
-          }}
-        >
-          Sign Up
-        </Button>
+    <Box className="my-2 rounded-md  fixed w-full px-8 py-4 ">
+      <Flex justify={"between"} align={"center"}>
+        <Logo className={"h-12"} />
+        <Flex gap={"3"} align={"center"}>
+          <Button
+            type="button"
+            variant="ghost"
+            color="gray"
+            className="font-bold"
+            onClick={() => {
+              navigate("./signin");
+            }}
+          >
+            Sign In
+          </Button>
+          <Button
+            type="button"
+            onClick={() => {
+              navigate("./signup");
+            }}
+          >
+            Get Started
+            <ArrowRightIcon />
+          </Button>
+        </Flex>
       </Flex>
-    </Flex>
+    </Box>
   );
 }
