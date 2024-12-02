@@ -1,4 +1,16 @@
-import { Editor, Transforms, Element } from "slate";
+import { unified } from "unified";
+import remarkParse from "remark-parse";
+import remarkSlate from "remark-slate";
+
+const markdownToSlate = async (markdown) => {
+  const slateContent = await unified()
+    .use(remarkParse)
+    .use(remarkSlate)
+    .process(markdown);
+  return slateContent.result;
+};
+
+import { Editor, Transforms, Element, Text, Path, Range } from "slate";
 export const USER_EDITOR_DOC_TEMPLATE = [
   {
     type: "paragraph",
@@ -38,6 +50,43 @@ function getNodeWithCaret(editor) {
   } else {
     return Editor.parent(editor, selection.anchor.path); // Caret is within a text node
   }
+}
+export async function replaceSelectedText({ editor, newText }) {
+  const newNodes = await markdownToSlate(newText);
+  console.log(newNodes);
+  Transforms.delete(editor, {
+    match: (n) => !Editor.isEditor(n),
+  });
+  Transforms.insertNodes(editor, newNodes);
+}
+export function getSelectedText(editor) {
+  let para = "";
+  const { selection } = editor;
+  const { anchor, focus } = selection;
+  let startIndexOfText, endIndexOfText;
+  if (Range.isForward(selection)) {
+    startIndexOfText = anchor?.offset;
+    endIndexOfText = focus?.offset;
+  } else {
+    startIndexOfText = focus?.offset;
+    endIndexOfText = anchor?.offset;
+  }
+  let indexBeforeLastString = 0;
+  for (const [node] of Editor.nodes(editor, {
+    match: (n) => Text.isText(n),
+  })) {
+    indexBeforeLastString = para.length;
+    para += node?.text + "\n" || "";
+  }
+  if (Path.equals(anchor?.path, focus?.path)) {
+    para = para.substring(startIndexOfText, endIndexOfText);
+  } else {
+    para = para.substring(
+      startIndexOfText,
+      indexBeforeLastString + endIndexOfText
+    );
+  }
+  return para.trim();
 }
 export const CustomEditor = {
   isMarkActive({ editor, format }) {

@@ -52,7 +52,7 @@ export default function ResponseDialog({
                 setResponseObj({ ...responseObj, openResponseModal: false });
               }}
             >
-              Replace The Selection
+              Paste in editor
             </Button>
           )}
         </Flex>

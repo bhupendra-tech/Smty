@@ -12,6 +12,7 @@ import {
   TextAlignJustifyIcon,
   ListBulletIcon,
   StrikethroughIcon,
+  FileIcon,
 } from "@radix-ui/react-icons";
 import { OrderedListIcon } from "../../assets/orderedListIcon";
 import {
@@ -24,9 +25,10 @@ import {
   Button,
   Box,
   Card,
+  Badge,
 } from "@radix-ui/themes";
 import { useState } from "react";
-function Toolbar({ editor }) {
+function Toolbar({ editor, handleSaveClick, saveStatus }) {
   return (
     <Card className="fixed top-6 z-10">
       <Flex align={"center"} gap={"3"} className="bg-transparent">
@@ -106,6 +108,17 @@ function Toolbar({ editor }) {
           icon={<TextAlignJustifyIcon />}
           format={"Alignment"}
         />
+        <Button
+          onClick={handleSaveClick}
+          size={"1"}
+          color="gray"
+          variant="surface"
+        >
+          <FileIcon />
+          Save
+        </Button>
+        {saveStatus === "saved" && <Badge color="green">Saved</Badge>}
+        {saveStatus === "unsaved" && <Badge color="red">Unable to save</Badge>}
       </Flex>
     </Card>
   );

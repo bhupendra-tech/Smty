@@ -364,9 +364,7 @@ function TopicList({ chapterId }) {
         setTopicObj({ ...topicObj, error: true, loading: false });
       } else {
         setTopicObj({
-          ...topicObj,
-          loading: false,
-          openAddTopicDialog: false,
+          defaultTopicObj,
         });
         setTopicListObj({
           ...topicListObj,
@@ -459,7 +457,7 @@ function TopicList({ chapterId }) {
               }}
               required
             />
-            <Flex
+            {/* <Flex
               align={"center"}
               width={"100%"}
               justify={"center"}
@@ -482,7 +480,7 @@ function TopicList({ chapterId }) {
             />
             <Text align={"center"} size={"1"} color="gray">
               Make sure the video has transcript
-            </Text>
+            </Text> */}
             {topicObj.error && (
               <Text size={"2"} color="red" align={"center"}>
                 Something went wrong

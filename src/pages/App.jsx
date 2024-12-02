@@ -18,7 +18,7 @@ export default function App() {
         <Box className="gradientBlock absolute right-72 top-24"></Box>
         <Box className="gradientBlock2 absolute left-72 top-56"></Box>
         <Heading as="h2" size={"9"} align={"center"} className="max-w-2xl">
-          INTELLIGENT SYSTEM TO LEARN THINGS AT YOUR OWN PACE
+          A INTELLIGENT SYSTEM TO EMPOWER LEARNING 
         </Heading>
         <Flex gap={"1"} align={"center"}>
           <Heading size={"2"} color="gray">

@@ -1,5 +1,4 @@
 import { Flex, Card, Heading, TextField, Text, Button } from "@radix-ui/themes";
-import { useEffect } from "react";
 import { useFetcher } from "react-router-dom";
 
 export default function Subject() {
