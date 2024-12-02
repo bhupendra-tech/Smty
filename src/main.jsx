@@ -39,10 +39,16 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: <Dashboard />,
         children: [
-          { index: true, element: <Subject />, action: submitSelectedSizeForm },
+          {
+            index: true,
+            element: <Subject />,
+            action: submitSelectedSizeForm,
+            errorElement: <ErrorPage />,
+          },
           {
             path: "editor",
             element: <EditorAndChatComponent />,
+            errorElement: <ErrorPage />,
           },
         ],
       },

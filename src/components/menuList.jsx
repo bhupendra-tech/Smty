@@ -70,7 +70,7 @@ export default function MenuList() {
             <Text size={"1"} align={"center"} color="red">
               Something went wrong
             </Text>
-          ) : subjectListObj.subjectList.length === 0 ? (
+          ) : subjectListObj?.subjectList?.length === 0 ? (
             <Text size={"1"} align={"center"} color="gray">
               Subjects not found
             </Text>
@@ -215,7 +215,7 @@ function ChapterList({ subjectId }) {
             <Text size={"1"} align={"center"} color="red">
               Something went wrong
             </Text>
-          ) : chapterListObj.chapterList.length === 0 ? (
+          ) : chapterListObj?.chapterList?.length === 0 ? (
             <Text size={"1"} align={"center"}>
               Chapters not found
             </Text>

@@ -5,16 +5,16 @@ import {
   DoubleArrowRightIcon,
 } from "@radix-ui/react-icons";
 import { useState } from "react";
-
+import ChatBox from "./chatBox";
 export default function EditorAndChatComponent() {
   const [isMenuClose, setIsMenuClose] = useState(false);
   return (
-    <Box className="w-full overflow-x-scroll">
+    <Box className="w-full">
       <Flex>
-        <Box flexGrow={"1"}>
+        <Box flexGrow={"1"} className="max-w-4xl">
           <Editor />
         </Box>
-        <Box position={"relative"}>
+        <Box position={"relative"} className="w-full max-w-sm">
           <IconButton
             size={"1"}
             className={`absolute top-4 ${
@@ -28,12 +28,8 @@ export default function EditorAndChatComponent() {
           >
             {isMenuClose ? <DoubleArrowLeftIcon /> : <DoubleArrowRightIcon />}
           </IconButton>
-          <Box
-            className={`${
-              isMenuClose ? "hidden" : ""
-            } bg-red-900 h-screen w-[18rem]`}
-          >
-            sdf
+          <Box className={`${isMenuClose ? "hidden" : ""}  h-screen w-full `}>
+            <ChatBox />
           </Box>
         </Box>
       </Flex>
