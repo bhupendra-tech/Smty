@@ -39,10 +39,10 @@ export default function Subject() {
             {fetcher?.data?.errorMsg || "Something went wrong"}
           </Text>
         )}
-        <Text as="p" size={"1"} color="gray" mt={"6"}>
+        {/* <Text as="p" size={"1"} color="gray" mt={"6"}>
           When you create a new subject its syllabus and the content will be
           automatically generated
-        </Text>
+        </Text> */}
       </Card>
     </Flex>
   );
