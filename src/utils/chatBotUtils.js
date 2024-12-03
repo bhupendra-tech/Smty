@@ -23,6 +23,8 @@ export async function getResponseFromChatBot({ type, subType, text }) {
       return await getPromptResponse(SYSTEM_PROMPTS.PROMPT, text);
     } else if (subType === SUB_TYPES.COMPLETE_IT) {
       return await getPromptResponse(SYSTEM_PROMPTS.COMPLETE_IT, text);
+    } else if (subType === SUB_TYPES.ELABORATE) {
+      return await getPromptResponse(SYSTEM_PROMPTS.ELABORATE, text);
     } else if (subType === SUB_TYPES.SIMPLIFY) {
       return await getPromptResponse(SYSTEM_PROMPTS.SIMPLIFY, text);
     } else if (subType === SUB_TYPES.BRIEF) {
@@ -58,7 +60,7 @@ const getPromptResponse = async (prompt, text) => {
   try {
     const session = await ai.languageModel.create({ systemPrompt: prompt });
     const res = await session.prompt(text);
-    console.log(res);
+    console.log({ res, text });
     session.destroy();
     return res;
   } catch (error) {

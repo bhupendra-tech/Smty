@@ -87,9 +87,9 @@ const CaptionElement = (props) => {
 
 const DefaultElement = (props) => {
   return (
-    <Text {...props.attributes} as="p" size={"3"}>
+    <div {...props.attributes} as="p" size={"3"}>
       {props.children}
-    </Text>
+    </div>
   );
 };
 
@@ -97,25 +97,25 @@ export const renderEditorElement = (props) => {
   switch (props.element.type) {
     case "code":
       return <CodeElement {...props} />;
-    case "blockQuote":
+    case "blockQuote" || "block_quote":
       return <BlockQuoteElement {...props} />;
-    case "numberedList":
+    case "numberedList" || "ol_list":
       return <NumberedListElement {...props} />;
-    case "bulletedList":
+    case "bulletedList" || "ul_list":
       return <BulletedListElement {...props} />;
-    case "listItem":
+    case "listItem" || "list_item":
       return <ListItemElement {...props} />;
-    case "Heading 1":
+    case "Heading 1" || "heading_one":
       return <H1Element {...props} />;
-    case "Heading 2":
+    case "Heading 2" || "heading_two":
       return <H2Element {...props} />;
-    case "Heading 3":
+    case "Heading 3" || "heading_three":
       return <H3Element {...props} />;
-    case "Heading 4":
+    case "Heading 4" || "heading_four":
       return <H4Element {...props} />;
-    case "Heading 5":
+    case "Heading 5" || "heading_five":
       return <H5Element {...props} />;
-    case "Heading 6":
+    case "Heading 6" || "heading_six":
       return <H6Element {...props} />;
     case "Alignment":
       return <AlignmentElement {...props} />;

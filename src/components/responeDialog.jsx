@@ -1,5 +1,4 @@
 import {
-  Box,
   Dialog,
   Spinner,
   Button,
@@ -46,14 +45,32 @@ export default function ResponseDialog({
             Close
           </Button>
           {!responseObj?.error && (
-            <Button
-              onClick={() => {
-                replaceSelectedText({ editor, newText: responseObj.response });
-                setResponseObj({ ...responseObj, openResponseModal: false });
-              }}
-            >
-              Paste in editor
-            </Button>
+            <Flex gapX={"3"}>
+              <Button
+                variant="surface"
+                onClick={() => {
+                  replaceSelectedText({
+                    editor,
+                    newText: responseObj.response,
+                    replace: true,
+                  });
+                  setResponseObj({ ...responseObj, openResponseModal: false });
+                }}
+              >
+                Replace Selection
+              </Button>
+              <Button
+                onClick={() => {
+                  replaceSelectedText({
+                    editor,
+                    newText: responseObj.response,
+                  });
+                  setResponseObj({ ...responseObj, openResponseModal: false });
+                }}
+              >
+                Paste in editor
+              </Button>
+            </Flex>
           )}
         </Flex>
       </Dialog.Content>
