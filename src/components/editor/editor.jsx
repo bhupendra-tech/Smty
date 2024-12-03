@@ -92,7 +92,6 @@ export default function Editor() {
       openResponseModal: true,
     }));
     const text = getSelectedText(editor);
-    console.log(text, type, subType);
     if (text === "") {
       setResponseObj({
         ...responseObj,
@@ -102,7 +101,6 @@ export default function Editor() {
       });
     } else {
       const res = await getResponseFromChatBot({ type, subType, text });
-      console.log(res);
       if (res?.error) {
         setResponseObj({
           ...responseObj,

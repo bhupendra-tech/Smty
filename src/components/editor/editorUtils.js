@@ -53,11 +53,11 @@ function getNodeWithCaret(editor) {
 }
 export async function replaceSelectedText({ editor, newText }) {
   const newNodes = await markdownToSlate(newText);
-  console.log(newNodes);
-  Transforms.delete(editor, {
-    match: (n) => !Editor.isEditor(n),
-  });
-  Transforms.insertNodes(editor, newNodes);
+  // Transforms.delete(editor, {
+  //   match: (n) => !Editor.isEditor(n),
+  // });
+  // Transforms.insertNodes(editor, newNodes);
+  Transforms.insertNodes(editor, newNodes, { at: [editor.children.length] });
 }
 export function getSelectedText(editor) {
   let para = "";

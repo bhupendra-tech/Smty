@@ -1,3 +1,5 @@
+import Markdown from "https://esm.sh/react-markdown@9";
+
 import { CopyIcon, PaperPlaneIcon, ReloadIcon } from "@radix-ui/react-icons";
 import {
   Box,
@@ -34,6 +36,7 @@ export default function ChatBox() {
     },
     responseLoading: false,
     errorMsg: null,
+    responseHtml: "",
   };
   const [resetSession, setResetSession] = useState(false);
   const [chatConversation, setChatConversation] = useState([]);
@@ -48,7 +51,7 @@ export default function ChatBox() {
           errorMsg: "Model not available or working",
         });
         setChatConversation([
-        ...chatConversation,
+          ...chatConversation,
           {
             ...inputObj,
             errorMsg: "Model not available or working",
@@ -147,7 +150,13 @@ export default function ChatBox() {
                     <CopyIcon />
                   </IconButton>
                 </Flex>
-                <Text size={"3"}>{errorMsg !== null ? errorMsg : msg}</Text>
+                <Box>
+                  {errorMsg !== null ? (
+                    <Text size={"3"}>errorMsg</Text>
+                  ) : (
+                    <Markdown>{msg}</Markdown>
+                  )}
+                </Box>
               </Card>
             );
           })
